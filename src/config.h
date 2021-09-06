@@ -4,7 +4,7 @@
 #define CONFIG_H__
 
 //! Baseline Read Interval (minutes)
-#define READ_BASELINE_INTERVAL  60
+#define READ_BASELINE_INTERVAL  2
 
 //! Sensor Read Interval (seconds)
 #define READ_SENSOR_INTERVAL    1

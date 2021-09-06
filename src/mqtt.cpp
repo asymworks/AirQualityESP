@@ -235,8 +235,8 @@ void haDiscovery(const char * module_sn) {
 
     haRegisterSensor(module_sn, mqtt_topic_status, "sgp_errors", " ", 0, "sgp30_errors");
     haRegisterSensor(module_sn, mqtt_topic_status, "aqi_errors", " ", 0, "pms5003_errors");
-    haRegisterSensor(module_sn, mqtt_topic_status, "baseline_eco2", " ", 0, "sgp30_errors");
-    haRegisterSensor(module_sn, mqtt_topic_status, "baseline_tvoc", " ", 0, "pms5003_errors");
+    haRegisterSensor(module_sn, mqtt_topic_status, "baseline_eco2", " ", 0, "bl_eco2");
+    haRegisterSensor(module_sn, mqtt_topic_status, "baseline_tvoc", " ", 0, "bl_tvoc");
 }
 
 // Send JSON Data to MQTT

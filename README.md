@@ -132,6 +132,23 @@ There are five MQTT endpoints defined for this sensor:
     implemented, which resets the SGP30 baseline values to 0. Send `resetBaselines` as a string to this endpoint
     to reset the baselines.
 
+## Home Assistant Auto-Discovery
+
+The sensor provides auto-discovery data for Home Assistant to automatically create entities for the sensor.  Not all fields are auto-created, but the following sensors are created:
+
+- `sensor.aq_{sgp30id}_aqi_errors`: PMS5003 Running Error Count (resets to 0 on sensor reset)
+- `sensor.aq_{sgp30id}_baseline_eco2`: Effective CO2 baseline value from SGP30
+- `sensor.aq_{sgp30id}_baseline_tvoc`: Total VOC baseline value from SGP30
+- `sensor.aq_{sgp30id}_eco2`: Effective CO2 concentration (ppb)
+- `sensor.aq_{sgp30id}_humidity`: Relative humidity (%)
+- `sensor.aq_{sgp30id}_pm10`: 1.0µm particulate matter concentration (µg/m3)
+- `sensor.aq_{sgp30id}_pm25`: 2.5µm particulate matter concentration (µg/m3)
+- `sensor.aq_{sgp30id}_pm100`: 10µm particulate matter concentration (µg/m3)
+- `sensor.aq_{sgp30id}_pressure`: Atmospheric pressure (mbar)
+- `sensor.aq_{sgp30id}_sgp_errors`: SGP30 Running Error Count (resets to 0 on sensor reset)
+- `sensor.aq_{sgp30id}_temperature`: Air temperature (°C)
+- `sensor.aq_{sgp30id}_tvoc`: Total VOC concentration (ppm)
+
 ## License
 
 MIT License
