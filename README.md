@@ -2,6 +2,10 @@
 
 Arduino code to implement a MQTT-enabled air quality sensor using an ESP8266 (NodeMCU) microcontroller, BME280 climate sensor, SGP30 gas sensor, and PMA5003I particulate matter sensor. It is designed for use with Home Assistant and supports auto-discovery of all the measurands.
 
+## Usage
+
+Acquire hardware and connect as per the [Hardware Configuration](#hardware-configuration) section. Set up the MQTT integration for Home Assistant and enable [MQTT Discovery](https://www.home-assistant.io/docs/mqtt/discovery/). Update the [Software Configuration](#software-configuration), compile, and flash the NodeMCU. Optionally monitor the serial port to see the initialization sequence, consisting of checking communication with the sensors, connecting to WiFi and MQTT, and sending the MQTT discovery messages to Home Assistant. Shortly Home Assistant should populate the sensor values from the sensor.
+
 ## Hardware Configuration
 
 Fritzing diagram is coming soon... basically a [BME280](https://www.adafruit.com/product/2652), [SGP30](https://www.adafruit.com/product/3709), and [PMSA5003I](https://www.adafruit.com/product/4632) connected to the hardware SPI bus on a [NodeMCU v1.1](https://www.nodemcu.com/index_en.html).
