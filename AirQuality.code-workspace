@@ -3,9 +3,6 @@
 		{
 			"name": "AirQualityESP",
 			"path": "."
-		},
-		{
-			"path": "../AirQualityPMS5003I"
 		}
 	],
 	"settings": {}
