@@ -4,11 +4,32 @@ Arduino code to implement a MQTT-enabled air quality sensor using an ESP8266 (No
 
 ## Usage
 
-Acquire hardware and connect as per the [Hardware Configuration](#hardware-configuration) section. Set up the MQTT integration for Home Assistant and enable [MQTT Discovery](https://www.home-assistant.io/docs/mqtt/discovery/). Update the [Software Configuration](#software-configuration), compile, and flash the NodeMCU. Optionally monitor the serial port to see the initialization sequence, consisting of checking communication with the sensors, connecting to WiFi and MQTT, and sending the MQTT discovery messages to Home Assistant. Shortly Home Assistant should populate the sensor values from the sensor.
+Acquire hardware in the [BOM](#bill-of-materials) and connect as per the [Hardware Configuration](#hardware-configuration) section. Set up the MQTT integration for Home Assistant and enable [MQTT Discovery](https://www.home-assistant.io/docs/mqtt/discovery/). Update the [Software Configuration](#software-configuration), [compile](#building), and flash the NodeMCU. Optionally monitor the serial port to see the initialization sequence, consisting of checking communication with the sensors, connecting to WiFi and MQTT, and sending the MQTT discovery messages to Home Assistant. Shortly Home Assistant should populate the sensor values from the sensor.
+
+## Bill of Materials
+
+|Qty|Part Number|Description|Link|
+|-|-|-|-|
+|1|ESP8266 (NodeMCU v2)|NodeMCU|[Amazon](https://www.amazon.com/HiLetgo-Internet-Development-Wireless-Micropython/dp/B010O1G1ES?th=1)|
+|1|BME280|SPI/I2C Temperature/Humidity/Pressure Sensor|[Adafruit](https://www.adafruit.com/product/2652)|
+|1|SGP30|I2C VOC and eCO2 Sensor|[Adafruit](https://www.adafruit.com/product/3709)|
+|1|PMAS5003I|I2C Particulate Matter Sensor|[Adafruit](https://www.adafruit.com/product/4632)|
+
 
 ## Hardware Configuration
 
-Fritzing diagram is coming soon... basically a [BME280](https://www.adafruit.com/product/2652), [SGP30](https://www.adafruit.com/product/3709), and [PMSA5003I](https://www.adafruit.com/product/4632) connected to the hardware SPI bus on a [NodeMCU v1.1](https://www.nodemcu.com/index_en.html).
+The Fritzing breadboard for the sensor is shown below.
+
+![Fritzing Breadboard](AQSensor_v1.png)
+
+Sensor power comes from the NodeMCU power input (i.e. USB port) and provides +5V to all sensors.  Wiring color corresponds to the signal names:
+
+|Color|Signal|
+|-|-|
+|Red|+5V USB|
+|Black|Ground|
+|Blue|SDA|
+|Yellow|SCL|
 
 ## Software Configuration
 
@@ -77,6 +98,23 @@ This sets the timeout for the `Arduino_MQTT_Client::processPackets()` call to pr
 ```
 
 Comment out the first line to disable debug logging to the serial port, or change `DEBUG_BAUD` to the preferred baud rate of your serial terminal (change `platformio.ini` as well if you are using the integrated terminal emulator).
+
+## Building
+
+The Arduino code depends on several libraries that must be installed first. I had to install BusIO and Unified Sensor manually for PlatformIO to successfully build the code.
+
+|Library|Version|Usage|
+|-|-|-|
+|[Adafruit MQTT Library](https://github.com/adafruit/Adafruit_MQTT_Library)|^2.4.2|MQTT Communication|
+|[Adafruit SGP30 Sensor](https://github.com/adafruit/Adafruit_SGP30)|^2.0.0|SGP30 Driver|
+|[Adafruit BME280 Library](https://github.com/adafruit/Adafruit_BME280_Library)|^2.1.4|BME280 Driver|
+|[Adafruit PM25 AQI Sensor](https://github.com/adafruit/adafruit/Adafruit_PM25AQI)|^1.0.6|PMAS5003I Driver|
+|[Task Scheduler](https://github.com/arkhipenko/TaskScheduler)|^3.3.0|Arduino Cooperative Multitasking|
+|[EEPROM Rotate](https://github.com/xoseperez/EEPROM_Rotate)|^0.9.2|Flash Wear Leveling for NodeMCU|
+|[Adafruit BusIO](https://github.com/adafruit/Adafruit_BusIO)|^1.8.2|Dependency of Adafruit PM25 AQI Sensor Library|
+|[Adafruit Unified Sensor](https://github.com/adafruit/Adafruit_Sensor)|^1.1.4|Dependency of BME280 and SGP30 Sensor Libraries|
+
+My build environment is Visual Studio Code with the [PlatformIO](https://platformio.org/install/ide?install=vscode) plugin. The `platformio.ini` file should automatically install the required libraries when building the first time.
 
 ## MQTT Endpoints
 
