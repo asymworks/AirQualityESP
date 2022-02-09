@@ -82,7 +82,7 @@ void cmd_cb(char * data, uint16_t len) {
 
 // Setup MQTT
 int setup_mqtt(const char * module_sn) {
-    mqtt = new Adafruit_MQTT_Client(&client, mqtt_host, 8883, module_sn, mqtt_user, mqtt_passwd);
+    mqtt = new Adafruit_MQTT_Client(&client, mqtt_host, mqtt_port, module_sn, mqtt_user, mqtt_passwd);
 
     // Format Topic Paths
     sprintf(mqtt_topic_status, "%s/%s/%s", MQTT_TOPIC_BASE, module_sn, "status");
