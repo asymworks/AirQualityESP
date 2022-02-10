@@ -27,7 +27,7 @@ extern const char * mqtt_host;
 extern const char * mqtt_user;
 extern const char * mqtt_passwd;
 extern const char * mqtt_fingerprint;
-extern const uint16_t mqtt_port;
+extern uint16_t mqtt_port;
 
 /** MQTT Topic Path */
 #define MQTT_TOPIC_BASE "sensor/aq"

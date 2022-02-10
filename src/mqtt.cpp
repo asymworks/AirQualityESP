@@ -1,6 +1,7 @@
 /** MQTT Support Routines */
 
 #include <ESP8266WiFi.h>
+#include <strings.h>
 
 #include "Adafruit_MQTT.h"
 #include "Adafruit_MQTT_Client.h"
@@ -37,7 +38,11 @@
 "}"
 
 // SSL Client
+#ifdef MQTT_SECURE
 WiFiClientSecure client;
+#else
+WiFiClient client;
+#endif
 
 // MQTT Client
 Adafruit_MQTT_Client * mqtt;
