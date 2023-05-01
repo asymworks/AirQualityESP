@@ -33,6 +33,12 @@ Sensor power comes from the NodeMCU power input (i.e. USB port) and provides +5V
 
 ## Software Configuration
 
+> **Warning**
+> The MQTT messages that Home Assistant uses to auto-discover this sensor are bigger than the maximum buffer size
+> defined in the AdaFruit MQTT Library. In order for auto-discovery to work, you must find and change the `MAXBUFFERSIZE`
+> constant in the `Adafruit_MQTT.h` file and set it to a larger value like `500`. Migrating to the PubSub library may
+> fix this, and is under investigation.
+
 The `config.cpp-sample` file should be copied and renamed to `config.cpp`, and the following settings filled in (these sensitive values should not be stored in source control):
 
 ```cpp
@@ -105,7 +111,7 @@ The Arduino code depends on several libraries that must be installed first. I ha
 
 |Library|Version|Usage|
 |-|-|-|
-|[Adafruit MQTT Library](https://github.com/adafruit/Adafruit_MQTT_Library)|^2.4.2|MQTT Communication|
+|[Adafruit MQTT Library](https://github.com/adafruit/Adafruit_MQTT_Library)|^2.5.0|MQTT Communication|
 |[Adafruit SGP30 Sensor](https://github.com/adafruit/Adafruit_SGP30)|^2.0.0|SGP30 Driver|
 |[Adafruit BME280 Library](https://github.com/adafruit/Adafruit_BME280_Library)|^2.1.4|BME280 Driver|
 |[Adafruit PM25 AQI Sensor](https://github.com/adafruit/adafruit/Adafruit_PM25AQI)|^1.0.6|PMAS5003I Driver|

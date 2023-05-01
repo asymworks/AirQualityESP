@@ -160,7 +160,7 @@ int connect_mqtt(const char * module_sn) {
     }
 
     // Reconnect to the server
-    Serial.printf("Connecting to MQTT server at %s as %s ", mqtt_host, module_sn);
+    Serial.printf("Connecting to MQTT server at %s:%d as %s ", mqtt_host, mqtt_port, module_sn);
 
     uint8_t retries = 3;
     while ((ret = mqtt->connect()) != 0) {
@@ -200,11 +200,13 @@ void haRegisterSensor(
 ) {
     char cfgSensorName[40];
     char cfgTopic[80];
-    char cfgData[MAXBUFFERSIZE-20];
+    char cfgDev[120];
+    char cfgData[MAXBUFFERSIZE-150];
     char cfgMessage[MAXBUFFERSIZE];
 
     snprintf(cfgSensorName, 39, "aq_%s_%s", module_sn, name);
     snprintf(cfgTopic, 79, "homeassistant/sensor/%s/config", cfgSensorName);
+    snprintf(cfgDev, 119, "\"ids\":[\"aq_%s\"],\"mf\":\"Asymworks, LLC\",\"mdl\":\"AirQualityESP\",\"name\":\"AirQuality ESP %s\"", module_sn, module_sn);
     snprintf(cfgData, MAXBUFFERSIZE-21, "\"name\":\"%s\",\"uniq_id\":\"%s\",\"unit_of_meas\":\"%s\",\"stat_t\":\"%s\",\"val_tpl\":\"{{ value_json.%s }}\"",
         cfgSensorName,
         cfgSensorName,
@@ -214,9 +216,9 @@ void haRegisterSensor(
     );
 
     if (deviceClass) {
-        snprintf(cfgMessage, MAXBUFFERSIZE-1, "{\"dev_cla\":\"%s\",%s}", deviceClass, cfgData);
+        snprintf(cfgMessage, MAXBUFFERSIZE-1, "{\"dev_cla\":\"%s\",%s,\"dev\":{%s}}", deviceClass, cfgData, cfgDev);
     } else {
-        snprintf(cfgMessage, MAXBUFFERSIZE-1, "{%s}", cfgData);
+        snprintf(cfgMessage, MAXBUFFERSIZE-1, "{%s,\"dev\":{%s}}", cfgData, cfgDev);
     }
 
 #ifdef DEBUG
