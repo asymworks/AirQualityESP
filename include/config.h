@@ -38,6 +38,9 @@ extern uint16_t mqtt_port;
 /** Number of milliseconds to wait for Subscription Packets */
 #define MQTT_PROCESS_MS 100
 
+/** Retain Home Assistant Discovery Messages */
+#define MQTT_RETAIN_DISCOVERY true
+
 /** Debug Output to Serial Port */
 #define DEBUG
 #define DEBUG_BAUD 115200

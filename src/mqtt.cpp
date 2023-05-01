@@ -195,7 +195,8 @@ void haRegisterSensor(
     const char * name,
     const char * units,
     const char * deviceClass,
-    const char * valueKey
+    const char * valueKey,
+    bool retain = true
 ) {
     char cfgSensorName[40];
     char cfgTopic[80];
@@ -222,21 +223,21 @@ void haRegisterSensor(
     Serial.printf("%s %s\n", cfgTopic, cfgMessage);
 #endif
 
-    mqtt->publish(cfgTopic, cfgMessage);
+    mqtt->publish(cfgTopic, cfgMessage, 0, retain);
 }
 
 // Send Home Assistant Discovery for all sensors
-void haDiscovery(const char * module_sn) {
-    haRegisterSensor(module_sn, mqtt_topic_data, "temperature", "°C", "temperature", "t");
-    haRegisterSensor(module_sn, mqtt_topic_data, "pressure", "Pa", "pressure", "p");
-    haRegisterSensor(module_sn, mqtt_topic_data, "humidity", "%", "humidity", "rh");
+void haDiscovery(const char * module_sn, bool retain) {
+    haRegisterSensor(module_sn, mqtt_topic_data, "temperature", "°C", "temperature", "t", retain);
+    haRegisterSensor(module_sn, mqtt_topic_data, "pressure", "Pa", "pressure", "p", retain);
+    haRegisterSensor(module_sn, mqtt_topic_data, "humidity", "%", "humidity", "rh", retain);
 
-    haRegisterSensor(module_sn, mqtt_topic_data, "tvoc", "ppb", 0, "tvoc");
-    haRegisterSensor(module_sn, mqtt_topic_data, "eco2", "ppm", "carbon_dioxide", "co2");
+    haRegisterSensor(module_sn, mqtt_topic_data, "tvoc", "ppb", 0, "tvoc", retain);
+    haRegisterSensor(module_sn, mqtt_topic_data, "eco2", "ppm", "carbon_dioxide", "co2", retain);
 
-    haRegisterSensor(module_sn, mqtt_topic_data, "pm10", "µg/m³", 0, "pm10");
-    haRegisterSensor(module_sn, mqtt_topic_data, "pm25", "µg/m³", 0, "pm25");
-    haRegisterSensor(module_sn, mqtt_topic_data, "pm100", "µg/m³", 0, "pm100");
+    haRegisterSensor(module_sn, mqtt_topic_data, "pm10", "µg/m³", 0, "pm10", retain);
+    haRegisterSensor(module_sn, mqtt_topic_data, "pm25", "µg/m³", 0, "pm25", retain);
+    haRegisterSensor(module_sn, mqtt_topic_data, "pm100", "µg/m³", 0, "pm100", retain);
 
     haRegisterSensor(module_sn, mqtt_topic_status, "sgp_errors", " ", 0, "sgp30_errors");
     haRegisterSensor(module_sn, mqtt_topic_status, "aqi_errors", " ", 0, "pms5003_errors");

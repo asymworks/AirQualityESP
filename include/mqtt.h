@@ -3,6 +3,8 @@
 #ifndef MQTT_H__
 #define MQTT_H__
 
+#include <stdint.h>
+
 #include "sensor.h"
 
 /**
@@ -29,7 +31,7 @@ void process_mqtt(int16_t);
  * Send Home Assistant Discovery MQTT messages
  * @param [in] module_sn module serial number string
  */
-void haDiscovery(const char *);
+void haDiscovery(const char *, bool);
 
 /**
  * Report sensor data.

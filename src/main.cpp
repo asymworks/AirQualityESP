@@ -41,7 +41,7 @@ Task tPublish(PUBLISH_INTERVAL * TASK_SECOND, TASK_FOREVER, &t_publish);
 //! Send Home Assistant Discovery Messages
 void t_discovery() {
     if (!connect_mqtt(module_sn)) {
-        haDiscovery(module_sn);
+        haDiscovery(module_sn, MQTT_RETAIN_DISCOVERY);
 
         // Discovery only runs once
         tDiscovery.disable();
